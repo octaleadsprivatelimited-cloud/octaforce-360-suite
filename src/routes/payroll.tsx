@@ -8,6 +8,8 @@ import { Badge } from "@/components/ui/badge";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
 import { Avatar, AvatarFallback } from "@/components/ui/avatar";
 import { mock, formatINR } from "@/lib/mock-data";
+import { generateReportPdf } from "@/lib/pdf-report";
+import { toast } from "sonner";
 
 export const Route = createFileRoute("/payroll")({
   head: () => ({ meta: [{ title: "Payroll · OctaForce 360" }, { name: "description", content: "Salary processing with Basic, HRA, PF, ESI, professional tax, and instant payslip generation." }] }),
