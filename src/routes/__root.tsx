@@ -1,16 +1,14 @@
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import {
-  Outlet, Link, createRootRouteWithContext, useRouter,
-  HeadContent, Scripts,
+  Outlet, Link, createRootRouteWithContext, useRouter, useRouterState
 } from "@tanstack/react-router";
-import { useEffect, type ReactNode } from "react";
+import { useEffect } from "react";
 import { SidebarProvider, SidebarInset } from "@/components/ui/sidebar";
 import { AppSidebar } from "@/components/layout/app-sidebar";
 import { TopBar } from "@/components/layout/top-bar";
 import { AppFooter } from "@/components/layout/app-footer";
 import { Toaster } from "@/components/ui/sonner";
 
-import appCss from "../styles.css?url";
 import { reportLovableError } from "../lib/lovable-error-reporting";
 
 function NotFoundComponent() {
@@ -53,39 +51,58 @@ function ErrorComponent({ error, reset }: { error: Error; reset: () => void }) {
 export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()({
   head: () => ({
     meta: [
-      { charSet: "utf-8" },
-      { name: "viewport", content: "width=device-width, initial-scale=1" },
       { title: "OctaForce 360 — HRMS, CRM, Field Force & Payroll" },
       { name: "description", content: "Enterprise SaaS suite for HRMS, Sales CRM, Attendance, Payroll, Invoicing, and Live Field Force Management." },
-      { name: "theme-color", content: "#232F3E" },
-      { property: "og:title", content: "OctaForce 360 — HRMS, CRM, Field Force & Payroll" },
-      { property: "og:description", content: "Enterprise SaaS suite for HRMS, Sales CRM, Attendance, Payroll, Invoicing, and Live Field Force Management." },
-      { property: "og:type", content: "website" },
-      { name: "twitter:card", content: "summary_large_image" },
-      { name: "twitter:title", content: "OctaForce 360 — HRMS, CRM, Field Force & Payroll" },
-      { name: "twitter:description", content: "Enterprise SaaS suite for HRMS, Sales CRM, Attendance, Payroll, Invoicing, and Live Field Force Management." },
-      { property: "og:image", content: "https://pub-bb2e103a32db4e198524a2e9ed8f35b4.r2.dev/05a7be05-a522-45fb-abfd-a0eeba37c0b3/id-preview-03b93098--dcf66179-7118-43a8-a386-a445f89816ce.lovable.app-1781939661359.png" },
-      { name: "twitter:image", content: "https://pub-bb2e103a32db4e198524a2e9ed8f35b4.r2.dev/05a7be05-a522-45fb-abfd-a0eeba37c0b3/id-preview-03b93098--dcf66179-7118-43a8-a386-a445f89816ce.lovable.app-1781939661359.png" },
     ],
-    links: [{ rel: "stylesheet", href: appCss }],
   }),
-  shellComponent: RootShell,
   component: RootComponent,
   notFoundComponent: NotFoundComponent,
   errorComponent: ErrorComponent,
 });
 
-function RootShell({ children }: { children: ReactNode }) {
-  return (
-    <html lang="en" className="dark">
-      <head><HeadContent /></head>
-      <body>{children}<Scripts /></body>
-    </html>
-  );
-}
-
 function RootComponent() {
   const { queryClient } = Route.useRouteContext();
+  const matches = useRouterState({
+    select: (state) => state.matches,
+  });
+
+  useEffect(() => {
+    const matchedRouteWithHead = [...matches]
+      .reverse()
+      .find((match) => {
+        const route = (match as any).route;
+        return route && route.options && typeof route.options.head === "function";
+      });
+
+    if (matchedRouteWithHead) {
+      try {
+        const headFn = (matchedRouteWithHead as any).route.options.head;
+        const headData = headFn();
+        if (headData && headData.meta) {
+          const titleMeta = headData.meta.find((m: any) => m.title);
+          if (titleMeta && titleMeta.title) {
+            document.title = titleMeta.title;
+          } else {
+            const ogTitle = headData.meta.find((m: any) => m.property === "og:title" || m.name === "twitter:title");
+            if (ogTitle && ogTitle.content) {
+              document.title = ogTitle.content;
+            }
+          }
+
+          const descMeta = headData.meta.find((m: any) => m.name === "description");
+          if (descMeta && descMeta.content) {
+            const metaTag = document.querySelector('meta[name="description"]');
+            if (metaTag) {
+              metaTag.setAttribute("content", descMeta.content);
+            }
+          }
+        }
+      } catch (err) {
+        console.error("Failed to update page metadata:", err);
+      }
+    }
+  }, [matches]);
+
   return (
     <QueryClientProvider client={queryClient}>
       <SidebarProvider>

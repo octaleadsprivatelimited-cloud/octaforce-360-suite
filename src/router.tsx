@@ -14,3 +14,11 @@ export const getRouter = () => {
 
   return router;
 };
+
+const dummyRouter = getRouter();
+declare module "@tanstack/react-router" {
+  interface Register {
+    router: typeof dummyRouter;
+  }
+}
+
