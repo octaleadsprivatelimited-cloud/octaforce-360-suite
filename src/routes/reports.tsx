@@ -6,6 +6,8 @@ import { Card } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { revenueSeries, mock, formatINR } from "@/lib/mock-data";
+import { generateReportPdf } from "@/lib/pdf-report";
+import { toast } from "sonner";
 
 export const Route = createFileRoute("/reports")({
   head: () => ({ meta: [{ title: "Reports & Analytics · OctaForce 360" }, { name: "description", content: "HR, sales, and field-force reports with exportable insights." }] }),
