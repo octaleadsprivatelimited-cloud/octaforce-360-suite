@@ -10,6 +10,8 @@ import { Avatar, AvatarFallback } from "@/components/ui/avatar";
 import { Tabs, TabsList, TabsTrigger, TabsContent } from "@/components/ui/tabs";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
 import { mock, formatINR } from "@/lib/mock-data";
+import { generateReportPdf } from "@/lib/pdf-report";
+import { toast } from "sonner";
 
 export const Route = createFileRoute("/hrms")({
   head: () => ({ meta: [{ title: "HRMS · OctaForce 360" }, { name: "description", content: "Employee management, departments, designations, and complete HR profiles for OctaForce 360." }] }),
