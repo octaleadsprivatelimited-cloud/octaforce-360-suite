@@ -18,6 +18,36 @@ export const Route = createFileRoute("/payroll")({
 
 function Payroll() {
   const total = mock.employees.reduce((a,b)=>a+b.salary,0);
+  const exportPayslips = () => {
+    generateReportPdf({
+      title: "Payroll Register — Dec 2025",
+      subtitle: "Consolidated payroll with statutory deductions",
+      kpis: [
+        { label: "Gross Payout", value: formatINR(total) },
+        { label: "Net Payable", value: formatINR(Math.round(total * 0.82)) },
+        { label: "PF + ESI", value: formatINR(Math.round(total * 0.13)) },
+        { label: "Pay Date", value: "30 Dec 2025" },
+      ],
+      sections: [{
+        heading: "Salary Register",
+        columns: ["ID", "Employee", "Dept", "Basic", "HRA", "Deductions", "Net Pay"],
+        rows: mock.employees.slice(0, 30).map((e) => {
+          const basic = Math.round(e.salary * 0.5);
+          const hra = Math.round(e.salary * 0.25);
+          const ded = Math.round(e.salary * 0.18);
+          return [e.id, e.name, e.department, formatINR(basic), formatINR(hra), formatINR(ded), formatINR(e.salary - ded)];
+        }),
+        summary: `Total gross payout for ${mock.totalEmployees} employees: ${formatINR(total)}.`,
+      }],
+      notes: [
+        "PF computed at 12% of Basic; ESI at 0.75% where applicable.",
+        "Professional Tax deducted as per state-wise slabs.",
+        "TDS computed under the new tax regime — payslips have full breakdown.",
+      ],
+      fileName: "octaforce-payroll-dec2025.pdf",
+    });
+    toast.success("Payroll register PDF downloaded");
+  };
   return (
     <div className="space-y-5 animate-fade-in-up">
       <PageHeader
@@ -25,7 +55,7 @@ function Payroll() {
         title="Payroll Management"
         description="Process December 2025 payroll. PF, ESI, PT, and TDS automatically calculated."
         actions={<>
-          <Button variant="outline" size="sm"><Download className="mr-2 h-3.5 w-3.5" />Payslips</Button>
+          <Button variant="outline" size="sm" onClick={exportPayslips}><Download className="mr-2 h-3.5 w-3.5" />Payslips PDF</Button>
           <Button size="sm" className="gradient-primary text-secondary"><Wallet className="mr-2 h-3.5 w-3.5" />Run Payroll</Button>
         </>}
       />
