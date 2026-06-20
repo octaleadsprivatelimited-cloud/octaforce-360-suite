@@ -16,6 +16,8 @@ import { Badge } from "@/components/ui/badge";
 import { Avatar, AvatarFallback } from "@/components/ui/avatar";
 import { Progress } from "@/components/ui/progress";
 import { mock, revenueSeries, attendanceSeries, funnel, activityFeed, formatINR } from "@/lib/mock-data";
+import { generateReportPdf } from "@/lib/pdf-report";
+import { toast } from "sonner";
 
 export const Route = createFileRoute("/")({
   head: () => ({
