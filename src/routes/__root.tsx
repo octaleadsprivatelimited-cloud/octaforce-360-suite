@@ -7,6 +7,7 @@ import { useEffect, type ReactNode } from "react";
 import { SidebarProvider, SidebarInset } from "@/components/ui/sidebar";
 import { AppSidebar } from "@/components/layout/app-sidebar";
 import { TopBar } from "@/components/layout/top-bar";
+import { AppFooter } from "@/components/layout/app-footer";
 import { Toaster } from "@/components/ui/sonner";
 
 import appCss from "../styles.css?url";
