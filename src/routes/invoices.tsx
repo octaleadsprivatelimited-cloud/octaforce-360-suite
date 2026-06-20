@@ -78,7 +78,30 @@ function Invoices() {
         title="Invoicing & GST"
         description="Generate quotations, proforma, and GST invoices with CGST/SGST/IGST support."
         actions={<>
-          <Button variant="outline" size="sm"><Download className="mr-2 h-3.5 w-3.5" />Export</Button>
+          <Button variant="outline" size="sm" onClick={() => {
+            generateReportPdf({
+              title: "Invoice Register",
+              subtitle: "All issued GST invoices · last 90 days",
+              kpis: [
+                { label: "Total Invoiced", value: formatINR(mock.invoices.reduce((a,b)=>a+b.total,0)) },
+                { label: "Paid", value: `${paid.length} (${formatINR(paid.reduce((a,b)=>a+b.total,0))})` },
+                { label: "Pending", value: `${pending.length} (${formatINR(pending.reduce((a,b)=>a+b.total,0))})` },
+                { label: "Overdue", value: `${overdue.length} (${formatINR(overdue.reduce((a,b)=>a+b.total,0))})` },
+              ],
+              sections: [{
+                heading: "Invoice Ledger",
+                columns: ["Invoice #", "Customer", "Issued", "Due", "Subtotal", "GST", "Total", "Status"],
+                rows: mock.invoices.slice(0, 30).map((inv) => [inv.id, inv.customer, inv.issuedAt, inv.dueAt, formatINR(inv.subtotal), formatINR(inv.gst), formatINR(inv.total), inv.status]),
+                summary: `Showing 30 of ${mock.invoices.length} invoices.`,
+              }],
+              notes: [
+                "GST split as CGST 9% + SGST 9% for intra-state, IGST 18% for inter-state.",
+                "Overdue invoices accrue 1.5% interest per month per terms.",
+              ],
+              fileName: "octaforce-invoice-register.pdf",
+            });
+            toast.success("Invoice register PDF downloaded");
+          }}><Download className="mr-2 h-3.5 w-3.5" />Export PDF</Button>
           <Button size="sm" className="gradient-primary text-secondary"><Plus className="mr-2 h-3.5 w-3.5" />New Invoice</Button>
         </>}
       />
