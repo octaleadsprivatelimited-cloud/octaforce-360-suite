@@ -17,6 +17,7 @@ import { Route as SitemapDotxmlRouteImport } from './routes/sitemap[.]xml'
 import { Route as SalesRouteImport } from './routes/sales'
 import { Route as RolesRouteImport } from './routes/roles'
 import { Route as ReportsRouteImport } from './routes/reports'
+import { Route as ProcurementRouteImport } from './routes/procurement'
 import { Route as PayrollRouteImport } from './routes/payroll'
 import { Route as NotificationsRouteImport } from './routes/notifications'
 import { Route as MobileRouteImport } from './routes/mobile'
@@ -69,6 +70,11 @@ const RolesRoute = RolesRouteImport.update({
 const ReportsRoute = ReportsRouteImport.update({
   id: '/reports',
   path: '/reports',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ProcurementRoute = ProcurementRouteImport.update({
+  id: '/procurement',
+  path: '/procurement',
   getParentRoute: () => rootRouteImport,
 } as any)
 const PayrollRoute = PayrollRouteImport.update({
@@ -151,6 +157,7 @@ export interface FileRoutesByFullPath {
   '/mobile': typeof MobileRoute
   '/notifications': typeof NotificationsRoute
   '/payroll': typeof PayrollRoute
+  '/procurement': typeof ProcurementRoute
   '/reports': typeof ReportsRoute
   '/roles': typeof RolesRoute
   '/sales': typeof SalesRoute
@@ -174,6 +181,7 @@ export interface FileRoutesByTo {
   '/mobile': typeof MobileRoute
   '/notifications': typeof NotificationsRoute
   '/payroll': typeof PayrollRoute
+  '/procurement': typeof ProcurementRoute
   '/reports': typeof ReportsRoute
   '/roles': typeof RolesRoute
   '/sales': typeof SalesRoute
@@ -198,6 +206,7 @@ export interface FileRoutesById {
   '/mobile': typeof MobileRoute
   '/notifications': typeof NotificationsRoute
   '/payroll': typeof PayrollRoute
+  '/procurement': typeof ProcurementRoute
   '/reports': typeof ReportsRoute
   '/roles': typeof RolesRoute
   '/sales': typeof SalesRoute
@@ -223,6 +232,7 @@ export interface FileRouteTypes {
     | '/mobile'
     | '/notifications'
     | '/payroll'
+    | '/procurement'
     | '/reports'
     | '/roles'
     | '/sales'
@@ -246,6 +256,7 @@ export interface FileRouteTypes {
     | '/mobile'
     | '/notifications'
     | '/payroll'
+    | '/procurement'
     | '/reports'
     | '/roles'
     | '/sales'
@@ -269,6 +280,7 @@ export interface FileRouteTypes {
     | '/mobile'
     | '/notifications'
     | '/payroll'
+    | '/procurement'
     | '/reports'
     | '/roles'
     | '/sales'
@@ -293,6 +305,7 @@ export interface RootRouteChildren {
   MobileRoute: typeof MobileRoute
   NotificationsRoute: typeof NotificationsRoute
   PayrollRoute: typeof PayrollRoute
+  ProcurementRoute: typeof ProcurementRoute
   ReportsRoute: typeof ReportsRoute
   RolesRoute: typeof RolesRoute
   SalesRoute: typeof SalesRoute
@@ -359,6 +372,13 @@ declare module '@tanstack/react-router' {
       path: '/reports'
       fullPath: '/reports'
       preLoaderRoute: typeof ReportsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/procurement': {
+      id: '/procurement'
+      path: '/procurement'
+      fullPath: '/procurement'
+      preLoaderRoute: typeof ProcurementRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/payroll': {
@@ -469,6 +489,7 @@ const rootRouteChildren: RootRouteChildren = {
   MobileRoute: MobileRoute,
   NotificationsRoute: NotificationsRoute,
   PayrollRoute: PayrollRoute,
+  ProcurementRoute: ProcurementRoute,
   ReportsRoute: ReportsRoute,
   RolesRoute: RolesRoute,
   SalesRoute: SalesRoute,
