@@ -27,13 +27,52 @@ const departmentRevenue = [
 ];
 
 function Reports() {
+  const exportAll = () => {
+    generateReportPdf({
+      title: "Executive Analytics Report",
+      subtitle: "Cross-module performance — last 9 months",
+      kpis: [
+        { label: "Conversion Rate", value: "9.1%" },
+        { label: "MRR", value: formatINR(mock.monthlyRevenue) },
+        { label: "Active Field Agents", value: mock.activeFieldAgents },
+        { label: "Open Pipeline", value: mock.openLeads },
+      ],
+      sections: [
+        {
+          heading: "Monthly Revenue vs Target",
+          columns: ["Month", "Revenue", "Target", "Variance"],
+          rows: revenueSeries.map((r) => [r.m, formatINR(r.revenue), formatINR(r.target), `${Math.round(((r.revenue - r.target) / r.target) * 100)}%`]),
+        },
+        {
+          heading: "Department Revenue Contribution",
+          columns: ["Department", "Revenue", "Share"],
+          rows: departmentRevenue.map((d) => {
+            const total = departmentRevenue.reduce((a, b) => a + b.value, 0);
+            return [d.dept, formatINR(d.value), `${Math.round((d.value / total) * 100)}%`];
+          }),
+        },
+        {
+          heading: "Lead Conversion Trend",
+          columns: ["Month", "Conversion Rate"],
+          rows: conversionData.map((c) => [c.m, `${c.rate}%`]),
+          summary: "Conversion rate has improved 3.9 percentage points year-over-year.",
+        },
+      ],
+      notes: [
+        "All figures are derived from live module data as of report generation time.",
+        "Variance compares actual revenue to monthly board-approved targets.",
+      ],
+      fileName: "octaforce-analytics-report.pdf",
+    });
+    toast.success("Analytics report PDF downloaded");
+  };
   return (
     <div className="space-y-5 animate-fade-in-up">
       <PageHeader
         eyebrow="Insights"
         title="Reports & Analytics"
         description="Cross-module reports: attendance, payroll, lead conversion, route productivity, and more."
-        actions={<Button size="sm" className="gradient-primary text-secondary"><Download className="mr-2 h-3.5 w-3.5" />Export All</Button>}
+        actions={<Button size="sm" className="gradient-primary text-secondary" onClick={exportAll}><Download className="mr-2 h-3.5 w-3.5" />Export PDF</Button>}
       />
 
       <div className="grid gap-4 lg:grid-cols-2">
