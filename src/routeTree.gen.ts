@@ -9,12 +9,16 @@
 // Additionally, you should also exclude this file from your linter and/or formatter to prevent it from being checked or modified.
 
 import { Route as rootRouteImport } from './routes/__root'
+import { Route as WorkplaceRouteImport } from './routes/workplace'
 import { Route as VisitsRouteImport } from './routes/visits'
 import { Route as TrackingRouteImport } from './routes/tracking'
+import { Route as TicketsRouteImport } from './routes/tickets'
 import { Route as TasksRouteImport } from './routes/tasks'
 import { Route as SitemapDotxmlRouteImport } from './routes/sitemap[.]xml'
+import { Route as SalesRouteImport } from './routes/sales'
 import { Route as RolesRouteImport } from './routes/roles'
 import { Route as ReportsRouteImport } from './routes/reports'
+import { Route as ProcurementRouteImport } from './routes/procurement'
 import { Route as PayrollRouteImport } from './routes/payroll'
 import { Route as NotificationsRouteImport } from './routes/notifications'
 import { Route as MobileRouteImport } from './routes/mobile'
@@ -29,6 +33,11 @@ import { Route as AttendanceRouteImport } from './routes/attendance'
 import { Route as AiInsightsRouteImport } from './routes/ai-insights'
 import { Route as IndexRouteImport } from './routes/index'
 
+const WorkplaceRoute = WorkplaceRouteImport.update({
+  id: '/workplace',
+  path: '/workplace',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const VisitsRoute = VisitsRouteImport.update({
   id: '/visits',
   path: '/visits',
@@ -37,6 +46,11 @@ const VisitsRoute = VisitsRouteImport.update({
 const TrackingRoute = TrackingRouteImport.update({
   id: '/tracking',
   path: '/tracking',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const TicketsRoute = TicketsRouteImport.update({
+  id: '/tickets',
+  path: '/tickets',
   getParentRoute: () => rootRouteImport,
 } as any)
 const TasksRoute = TasksRouteImport.update({
@@ -49,6 +63,11 @@ const SitemapDotxmlRoute = SitemapDotxmlRouteImport.update({
   path: '/sitemap.xml',
   getParentRoute: () => rootRouteImport,
 } as any)
+const SalesRoute = SalesRouteImport.update({
+  id: '/sales',
+  path: '/sales',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const RolesRoute = RolesRouteImport.update({
   id: '/roles',
   path: '/roles',
@@ -57,6 +76,11 @@ const RolesRoute = RolesRouteImport.update({
 const ReportsRoute = ReportsRouteImport.update({
   id: '/reports',
   path: '/reports',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ProcurementRoute = ProcurementRouteImport.update({
+  id: '/procurement',
+  path: '/procurement',
   getParentRoute: () => rootRouteImport,
 } as any)
 const PayrollRoute = PayrollRouteImport.update({
@@ -139,12 +163,16 @@ export interface FileRoutesByFullPath {
   '/mobile': typeof MobileRoute
   '/notifications': typeof NotificationsRoute
   '/payroll': typeof PayrollRoute
+  '/procurement': typeof ProcurementRoute
   '/reports': typeof ReportsRoute
   '/roles': typeof RolesRoute
+  '/sales': typeof SalesRoute
   '/sitemap.xml': typeof SitemapDotxmlRoute
   '/tasks': typeof TasksRoute
+  '/tickets': typeof TicketsRoute
   '/tracking': typeof TrackingRoute
   '/visits': typeof VisitsRoute
+  '/workplace': typeof WorkplaceRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
@@ -160,12 +188,16 @@ export interface FileRoutesByTo {
   '/mobile': typeof MobileRoute
   '/notifications': typeof NotificationsRoute
   '/payroll': typeof PayrollRoute
+  '/procurement': typeof ProcurementRoute
   '/reports': typeof ReportsRoute
   '/roles': typeof RolesRoute
+  '/sales': typeof SalesRoute
   '/sitemap.xml': typeof SitemapDotxmlRoute
   '/tasks': typeof TasksRoute
+  '/tickets': typeof TicketsRoute
   '/tracking': typeof TrackingRoute
   '/visits': typeof VisitsRoute
+  '/workplace': typeof WorkplaceRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
@@ -182,12 +214,16 @@ export interface FileRoutesById {
   '/mobile': typeof MobileRoute
   '/notifications': typeof NotificationsRoute
   '/payroll': typeof PayrollRoute
+  '/procurement': typeof ProcurementRoute
   '/reports': typeof ReportsRoute
   '/roles': typeof RolesRoute
+  '/sales': typeof SalesRoute
   '/sitemap.xml': typeof SitemapDotxmlRoute
   '/tasks': typeof TasksRoute
+  '/tickets': typeof TicketsRoute
   '/tracking': typeof TrackingRoute
   '/visits': typeof VisitsRoute
+  '/workplace': typeof WorkplaceRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
@@ -205,12 +241,16 @@ export interface FileRouteTypes {
     | '/mobile'
     | '/notifications'
     | '/payroll'
+    | '/procurement'
     | '/reports'
     | '/roles'
+    | '/sales'
     | '/sitemap.xml'
     | '/tasks'
+    | '/tickets'
     | '/tracking'
     | '/visits'
+    | '/workplace'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
@@ -226,12 +266,16 @@ export interface FileRouteTypes {
     | '/mobile'
     | '/notifications'
     | '/payroll'
+    | '/procurement'
     | '/reports'
     | '/roles'
+    | '/sales'
     | '/sitemap.xml'
     | '/tasks'
+    | '/tickets'
     | '/tracking'
     | '/visits'
+    | '/workplace'
   id:
     | '__root__'
     | '/'
@@ -247,12 +291,16 @@ export interface FileRouteTypes {
     | '/mobile'
     | '/notifications'
     | '/payroll'
+    | '/procurement'
     | '/reports'
     | '/roles'
+    | '/sales'
     | '/sitemap.xml'
     | '/tasks'
+    | '/tickets'
     | '/tracking'
     | '/visits'
+    | '/workplace'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
@@ -269,16 +317,27 @@ export interface RootRouteChildren {
   MobileRoute: typeof MobileRoute
   NotificationsRoute: typeof NotificationsRoute
   PayrollRoute: typeof PayrollRoute
+  ProcurementRoute: typeof ProcurementRoute
   ReportsRoute: typeof ReportsRoute
   RolesRoute: typeof RolesRoute
+  SalesRoute: typeof SalesRoute
   SitemapDotxmlRoute: typeof SitemapDotxmlRoute
   TasksRoute: typeof TasksRoute
+  TicketsRoute: typeof TicketsRoute
   TrackingRoute: typeof TrackingRoute
   VisitsRoute: typeof VisitsRoute
+  WorkplaceRoute: typeof WorkplaceRoute
 }
 
 declare module '@tanstack/react-router' {
   interface FileRoutesByPath {
+    '/workplace': {
+      id: '/workplace'
+      path: '/workplace'
+      fullPath: '/workplace'
+      preLoaderRoute: typeof WorkplaceRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/visits': {
       id: '/visits'
       path: '/visits'
@@ -291,6 +350,13 @@ declare module '@tanstack/react-router' {
       path: '/tracking'
       fullPath: '/tracking'
       preLoaderRoute: typeof TrackingRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/tickets': {
+      id: '/tickets'
+      path: '/tickets'
+      fullPath: '/tickets'
+      preLoaderRoute: typeof TicketsRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/tasks': {
@@ -307,6 +373,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof SitemapDotxmlRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/sales': {
+      id: '/sales'
+      path: '/sales'
+      fullPath: '/sales'
+      preLoaderRoute: typeof SalesRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/roles': {
       id: '/roles'
       path: '/roles'
@@ -319,6 +392,13 @@ declare module '@tanstack/react-router' {
       path: '/reports'
       fullPath: '/reports'
       preLoaderRoute: typeof ReportsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/procurement': {
+      id: '/procurement'
+      path: '/procurement'
+      fullPath: '/procurement'
+      preLoaderRoute: typeof ProcurementRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/payroll': {
@@ -429,12 +509,16 @@ const rootRouteChildren: RootRouteChildren = {
   MobileRoute: MobileRoute,
   NotificationsRoute: NotificationsRoute,
   PayrollRoute: PayrollRoute,
+  ProcurementRoute: ProcurementRoute,
   ReportsRoute: ReportsRoute,
   RolesRoute: RolesRoute,
+  SalesRoute: SalesRoute,
   SitemapDotxmlRoute: SitemapDotxmlRoute,
   TasksRoute: TasksRoute,
+  TicketsRoute: TicketsRoute,
   TrackingRoute: TrackingRoute,
   VisitsRoute: VisitsRoute,
+  WorkplaceRoute: WorkplaceRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
