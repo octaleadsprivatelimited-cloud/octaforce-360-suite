@@ -10,6 +10,8 @@ import { Avatar, AvatarFallback } from "@/components/ui/avatar";
 import { Tabs, TabsList, TabsTrigger, TabsContent } from "@/components/ui/tabs";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
 import { mock, formatINR } from "@/lib/mock-data";
+import { generateReportPdf } from "@/lib/pdf-report";
+import { toast } from "sonner";
 
 export const Route = createFileRoute("/hrms")({
   head: () => ({ meta: [{ title: "HRMS · OctaForce 360" }, { name: "description", content: "Employee management, departments, designations, and complete HR profiles for OctaForce 360." }] }),
@@ -20,6 +22,38 @@ function HRMS() {
   const employees = mock.employees.slice(0, 25);
   const deptCounts = mock.employees.reduce<Record<string, number>>((acc, e) => { acc[e.department] = (acc[e.department] || 0) + 1; return acc; }, {});
 
+  const exportPdf = () => {
+    generateReportPdf({
+      title: "HRMS Employee Report",
+      subtitle: "All active employees across departments",
+      kpis: [
+        { label: "Total Employees", value: mock.totalEmployees },
+        { label: "Active", value: mock.activeEmployees },
+        { label: "Departments", value: Object.keys(deptCounts).length },
+        { label: "Present Today", value: mock.presentToday },
+      ],
+      sections: [
+        {
+          heading: "Department Headcount",
+          columns: ["Department", "Headcount", "Share"],
+          rows: Object.entries(deptCounts).map(([d, c]) => [d, c, `${Math.round((c / mock.totalEmployees) * 100)}%`]),
+        },
+        {
+          heading: "Employee Directory",
+          columns: ["ID", "Name", "Department", "Designation", "Location", "Salary", "Status"],
+          rows: mock.employees.slice(0, 30).map((e) => [e.id, e.name, e.department, e.designation, e.location, formatINR(e.salary), e.status]),
+          summary: `Showing 30 of ${mock.totalEmployees} employees.`,
+        },
+      ],
+      notes: [
+        "Salaries shown are gross monthly CTC.",
+        "For payroll breakdown including PF, ESI and TDS, see the Payroll module.",
+      ],
+      fileName: "octaforce-hrms-report.pdf",
+    });
+    toast.success("HRMS report PDF downloaded");
+  };
+
   return (
     <div className="space-y-5 animate-fade-in-up">
       <PageHeader
@@ -28,7 +62,7 @@ function HRMS() {
         description="Manage 100 employees across 8 departments with profiles, documents, and salary structures."
         actions={
           <>
-            <Button variant="outline" size="sm"><Download className="mr-2 h-3.5 w-3.5" />Export</Button>
+            <Button variant="outline" size="sm" onClick={exportPdf}><Download className="mr-2 h-3.5 w-3.5" />Export PDF</Button>
             <Button size="sm" className="gradient-primary text-secondary"><Plus className="mr-2 h-3.5 w-3.5" />Add Employee</Button>
           </>
         }

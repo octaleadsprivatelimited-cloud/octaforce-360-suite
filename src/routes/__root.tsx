@@ -7,6 +7,7 @@ import { useEffect, type ReactNode } from "react";
 import { SidebarProvider, SidebarInset } from "@/components/ui/sidebar";
 import { AppSidebar } from "@/components/layout/app-sidebar";
 import { TopBar } from "@/components/layout/top-bar";
+import { AppFooter } from "@/components/layout/app-footer";
 import { Toaster } from "@/components/ui/sonner";
 
 import appCss from "../styles.css?url";
@@ -95,6 +96,7 @@ function RootComponent() {
             <main className="min-w-0 flex-1 p-4 sm:p-5 lg:p-6">
               <Outlet />
             </main>
+            <AppFooter />
           </SidebarInset>
         </div>
         <Toaster position="top-right" />
