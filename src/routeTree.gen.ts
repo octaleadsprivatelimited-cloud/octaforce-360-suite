@@ -12,6 +12,7 @@ import { Route as rootRouteImport } from './routes/__root'
 import { Route as VisitsRouteImport } from './routes/visits'
 import { Route as TrackingRouteImport } from './routes/tracking'
 import { Route as TasksRouteImport } from './routes/tasks'
+import { Route as SitemapDotxmlRouteImport } from './routes/sitemap[.]xml'
 import { Route as RolesRouteImport } from './routes/roles'
 import { Route as ReportsRouteImport } from './routes/reports'
 import { Route as PayrollRouteImport } from './routes/payroll'
@@ -41,6 +42,11 @@ const TrackingRoute = TrackingRouteImport.update({
 const TasksRoute = TasksRouteImport.update({
   id: '/tasks',
   path: '/tasks',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const SitemapDotxmlRoute = SitemapDotxmlRouteImport.update({
+  id: '/sitemap.xml',
+  path: '/sitemap.xml',
   getParentRoute: () => rootRouteImport,
 } as any)
 const RolesRoute = RolesRouteImport.update({
@@ -135,6 +141,7 @@ export interface FileRoutesByFullPath {
   '/payroll': typeof PayrollRoute
   '/reports': typeof ReportsRoute
   '/roles': typeof RolesRoute
+  '/sitemap.xml': typeof SitemapDotxmlRoute
   '/tasks': typeof TasksRoute
   '/tracking': typeof TrackingRoute
   '/visits': typeof VisitsRoute
@@ -155,6 +162,7 @@ export interface FileRoutesByTo {
   '/payroll': typeof PayrollRoute
   '/reports': typeof ReportsRoute
   '/roles': typeof RolesRoute
+  '/sitemap.xml': typeof SitemapDotxmlRoute
   '/tasks': typeof TasksRoute
   '/tracking': typeof TrackingRoute
   '/visits': typeof VisitsRoute
@@ -176,6 +184,7 @@ export interface FileRoutesById {
   '/payroll': typeof PayrollRoute
   '/reports': typeof ReportsRoute
   '/roles': typeof RolesRoute
+  '/sitemap.xml': typeof SitemapDotxmlRoute
   '/tasks': typeof TasksRoute
   '/tracking': typeof TrackingRoute
   '/visits': typeof VisitsRoute
@@ -198,6 +207,7 @@ export interface FileRouteTypes {
     | '/payroll'
     | '/reports'
     | '/roles'
+    | '/sitemap.xml'
     | '/tasks'
     | '/tracking'
     | '/visits'
@@ -218,6 +228,7 @@ export interface FileRouteTypes {
     | '/payroll'
     | '/reports'
     | '/roles'
+    | '/sitemap.xml'
     | '/tasks'
     | '/tracking'
     | '/visits'
@@ -238,6 +249,7 @@ export interface FileRouteTypes {
     | '/payroll'
     | '/reports'
     | '/roles'
+    | '/sitemap.xml'
     | '/tasks'
     | '/tracking'
     | '/visits'
@@ -259,6 +271,7 @@ export interface RootRouteChildren {
   PayrollRoute: typeof PayrollRoute
   ReportsRoute: typeof ReportsRoute
   RolesRoute: typeof RolesRoute
+  SitemapDotxmlRoute: typeof SitemapDotxmlRoute
   TasksRoute: typeof TasksRoute
   TrackingRoute: typeof TrackingRoute
   VisitsRoute: typeof VisitsRoute
@@ -285,6 +298,13 @@ declare module '@tanstack/react-router' {
       path: '/tasks'
       fullPath: '/tasks'
       preLoaderRoute: typeof TasksRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/sitemap.xml': {
+      id: '/sitemap.xml'
+      path: '/sitemap.xml'
+      fullPath: '/sitemap.xml'
+      preLoaderRoute: typeof SitemapDotxmlRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/roles': {
@@ -411,6 +431,7 @@ const rootRouteChildren: RootRouteChildren = {
   PayrollRoute: PayrollRoute,
   ReportsRoute: ReportsRoute,
   RolesRoute: RolesRoute,
+  SitemapDotxmlRoute: SitemapDotxmlRoute,
   TasksRoute: TasksRoute,
   TrackingRoute: TrackingRoute,
   VisitsRoute: VisitsRoute,
