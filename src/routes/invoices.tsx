@@ -15,6 +15,8 @@ import { Label } from "@/components/ui/label";
 import { toast } from "sonner";
 import { mock, formatINR, type Invoice } from "@/lib/mock-data";
 import { downloadInvoicePdf, invoiceShareText, shareInvoiceEmail, shareInvoiceWhatsApp } from "@/lib/invoice-pdf";
+import { logActivity } from "@/lib/invoice-activity";
+import { InvoiceDetailsSheet } from "@/components/invoice-details-sheet";
 
 export const Route = createFileRoute("/invoices")({
   head: () => ({ meta: [{ title: "Invoicing · OctaForce 360" }, { name: "description", content: "GST-compliant invoicing, quotations, proforma invoices, and payment tracking." }] }),
@@ -26,6 +28,7 @@ function Invoices() {
   const pending = mock.invoices.filter(i=>i.status==="Pending");
   const overdue = mock.invoices.filter(i=>i.status==="Overdue");
   const [shareInv, setShareInv] = useState<Invoice | null>(null);
+  const [detailsInv, setDetailsInv] = useState<Invoice | null>(null);
   const [email, setEmail] = useState("");
   const [phone, setPhone] = useState("");
   const [message, setMessage] = useState("");
@@ -46,6 +49,7 @@ function Invoices() {
     } else {
       shareInvoiceEmail(shareInv);
     }
+    logActivity(shareInv, "email", email || "manual recipient");
     toast.success(`Email draft opened for ${shareInv.id}`);
   };
 
@@ -55,12 +59,14 @@ function Invoices() {
     const num = phone.replace(/\D/g, "");
     const url = num ? `https://wa.me/${num}?text=${text}` : `https://wa.me/?text=${text}`;
     window.open(url, "_blank", "noopener");
+    logActivity(shareInv, "whatsapp", phone || "manual recipient");
     toast.success(`WhatsApp opened for ${shareInv.id}`);
     void shareInvoiceWhatsApp;
   };
 
   const handleDownload = (inv: Invoice) => {
     downloadInvoicePdf(inv);
+    logActivity(inv, "download");
     toast.success(`${inv.id}.pdf downloaded`);
   };
 
@@ -126,6 +132,9 @@ function Invoices() {
                   </TableCell>
                   <TableCell>
                     <div className="flex items-center justify-end gap-1">
+                      <Button variant="ghost" size="icon" className="h-7 w-7" title="View details" onClick={() => setDetailsInv(inv)}>
+                        <Eye className="h-3.5 w-3.5" />
+                      </Button>
                       <Button variant="ghost" size="icon" className="h-7 w-7" title="Download PDF" onClick={() => handleDownload(inv)}>
                         <Download className="h-3.5 w-3.5" />
                       </Button>
@@ -195,6 +204,13 @@ function Invoices() {
           </DialogFooter>
         </DialogContent>
       </Dialog>
+
+      <InvoiceDetailsSheet
+        invoice={detailsInv}
+        open={!!detailsInv}
+        onOpenChange={(o) => !o && setDetailsInv(null)}
+        onShare={(inv) => { setDetailsInv(null); openShare(inv); }}
+      />
     </div>
   );
 }
