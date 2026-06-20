@@ -9,8 +9,50 @@
 // Additionally, you should also exclude this file from your linter and/or formatter to prevent it from being checked or modified.
 
 import { Route as rootRouteImport } from './routes/__root'
+import { Route as VisitsRouteImport } from './routes/visits'
+import { Route as TrackingRouteImport } from './routes/tracking'
+import { Route as PayrollRouteImport } from './routes/payroll'
+import { Route as InvoicesRouteImport } from './routes/invoices'
+import { Route as HrmsRouteImport } from './routes/hrms'
+import { Route as CrmRouteImport } from './routes/crm'
+import { Route as AttendanceRouteImport } from './routes/attendance'
 import { Route as IndexRouteImport } from './routes/index'
 
+const VisitsRoute = VisitsRouteImport.update({
+  id: '/visits',
+  path: '/visits',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const TrackingRoute = TrackingRouteImport.update({
+  id: '/tracking',
+  path: '/tracking',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const PayrollRoute = PayrollRouteImport.update({
+  id: '/payroll',
+  path: '/payroll',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const InvoicesRoute = InvoicesRouteImport.update({
+  id: '/invoices',
+  path: '/invoices',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const HrmsRoute = HrmsRouteImport.update({
+  id: '/hrms',
+  path: '/hrms',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const CrmRoute = CrmRouteImport.update({
+  id: '/crm',
+  path: '/crm',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AttendanceRoute = AttendanceRouteImport.update({
+  id: '/attendance',
+  path: '/attendance',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
@@ -19,28 +61,130 @@ const IndexRoute = IndexRouteImport.update({
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/attendance': typeof AttendanceRoute
+  '/crm': typeof CrmRoute
+  '/hrms': typeof HrmsRoute
+  '/invoices': typeof InvoicesRoute
+  '/payroll': typeof PayrollRoute
+  '/tracking': typeof TrackingRoute
+  '/visits': typeof VisitsRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/attendance': typeof AttendanceRoute
+  '/crm': typeof CrmRoute
+  '/hrms': typeof HrmsRoute
+  '/invoices': typeof InvoicesRoute
+  '/payroll': typeof PayrollRoute
+  '/tracking': typeof TrackingRoute
+  '/visits': typeof VisitsRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
+  '/attendance': typeof AttendanceRoute
+  '/crm': typeof CrmRoute
+  '/hrms': typeof HrmsRoute
+  '/invoices': typeof InvoicesRoute
+  '/payroll': typeof PayrollRoute
+  '/tracking': typeof TrackingRoute
+  '/visits': typeof VisitsRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/'
+  fullPaths:
+    | '/'
+    | '/attendance'
+    | '/crm'
+    | '/hrms'
+    | '/invoices'
+    | '/payroll'
+    | '/tracking'
+    | '/visits'
   fileRoutesByTo: FileRoutesByTo
-  to: '/'
-  id: '__root__' | '/'
+  to:
+    | '/'
+    | '/attendance'
+    | '/crm'
+    | '/hrms'
+    | '/invoices'
+    | '/payroll'
+    | '/tracking'
+    | '/visits'
+  id:
+    | '__root__'
+    | '/'
+    | '/attendance'
+    | '/crm'
+    | '/hrms'
+    | '/invoices'
+    | '/payroll'
+    | '/tracking'
+    | '/visits'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  AttendanceRoute: typeof AttendanceRoute
+  CrmRoute: typeof CrmRoute
+  HrmsRoute: typeof HrmsRoute
+  InvoicesRoute: typeof InvoicesRoute
+  PayrollRoute: typeof PayrollRoute
+  TrackingRoute: typeof TrackingRoute
+  VisitsRoute: typeof VisitsRoute
 }
 
 declare module '@tanstack/react-router' {
   interface FileRoutesByPath {
+    '/visits': {
+      id: '/visits'
+      path: '/visits'
+      fullPath: '/visits'
+      preLoaderRoute: typeof VisitsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/tracking': {
+      id: '/tracking'
+      path: '/tracking'
+      fullPath: '/tracking'
+      preLoaderRoute: typeof TrackingRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/payroll': {
+      id: '/payroll'
+      path: '/payroll'
+      fullPath: '/payroll'
+      preLoaderRoute: typeof PayrollRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/invoices': {
+      id: '/invoices'
+      path: '/invoices'
+      fullPath: '/invoices'
+      preLoaderRoute: typeof InvoicesRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/hrms': {
+      id: '/hrms'
+      path: '/hrms'
+      fullPath: '/hrms'
+      preLoaderRoute: typeof HrmsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/crm': {
+      id: '/crm'
+      path: '/crm'
+      fullPath: '/crm'
+      preLoaderRoute: typeof CrmRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/attendance': {
+      id: '/attendance'
+      path: '/attendance'
+      fullPath: '/attendance'
+      preLoaderRoute: typeof AttendanceRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/': {
       id: '/'
       path: '/'
@@ -53,6 +197,13 @@ declare module '@tanstack/react-router' {
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  AttendanceRoute: AttendanceRoute,
+  CrmRoute: CrmRoute,
+  HrmsRoute: HrmsRoute,
+  InvoicesRoute: InvoicesRoute,
+  PayrollRoute: PayrollRoute,
+  TrackingRoute: TrackingRoute,
+  VisitsRoute: VisitsRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
