@@ -30,6 +30,37 @@ export const Route = createFileRoute("/")({
 });
 
 function Dashboard() {
+  const exportSnapshot = () => {
+    generateReportPdf({
+      title: "Executive Dashboard Snapshot",
+      subtitle: "Daily operations · all departments",
+      kpis: [
+        { label: "Total Employees", value: mock.totalEmployees },
+        { label: "Present Today", value: mock.presentToday },
+        { label: "Open Pipeline", value: mock.openLeads },
+        { label: "MRR (Paid)", value: formatINR(mock.monthlyRevenue) },
+      ],
+      sections: [
+        {
+          heading: "Revenue Trend (last 9 months)",
+          columns: ["Month", "Revenue", "Target"],
+          rows: revenueSeries.map((r) => [r.m, formatINR(r.revenue), formatINR(r.target)]),
+        },
+        {
+          heading: "Sales Funnel",
+          columns: ["Stage", "Count"],
+          rows: funnel.map((f) => [f.stage, f.count]),
+        },
+        {
+          heading: "Recent Activity",
+          columns: ["Who", "What", "When"],
+          rows: activityFeed.map((a) => [a.who, a.what, a.when]),
+        },
+      ],
+      fileName: "octaforce-dashboard-snapshot.pdf",
+    });
+    toast.success("Dashboard snapshot PDF downloaded");
+  };
   return (
     <div className="space-y-5 animate-fade-in-up">
       <PageHeader
@@ -39,7 +70,7 @@ function Dashboard() {
         actions={
           <>
             <Button variant="outline" size="sm" className="hidden sm:inline-flex"><Filter className="mr-2 h-3.5 w-3.5" />Filter</Button>
-            <Button variant="outline" size="sm"><Download className="mr-2 h-3.5 w-3.5" />Export</Button>
+            <Button variant="outline" size="sm" onClick={exportSnapshot}><Download className="mr-2 h-3.5 w-3.5" />Export PDF</Button>
             <Button size="sm" className="gradient-primary text-secondary hover:opacity-90"><Plus className="mr-2 h-3.5 w-3.5" />New</Button>
           </>
         }
