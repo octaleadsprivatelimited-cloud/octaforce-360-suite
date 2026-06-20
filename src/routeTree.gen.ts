@@ -11,11 +11,21 @@
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as VisitsRouteImport } from './routes/visits'
 import { Route as TrackingRouteImport } from './routes/tracking'
+import { Route as TasksRouteImport } from './routes/tasks'
+import { Route as RolesRouteImport } from './routes/roles'
+import { Route as ReportsRouteImport } from './routes/reports'
 import { Route as PayrollRouteImport } from './routes/payroll'
+import { Route as NotificationsRouteImport } from './routes/notifications'
+import { Route as MobileRouteImport } from './routes/mobile'
+import { Route as LeaveRouteImport } from './routes/leave'
 import { Route as InvoicesRouteImport } from './routes/invoices'
 import { Route as HrmsRouteImport } from './routes/hrms'
+import { Route as GpsAlertsRouteImport } from './routes/gps-alerts'
+import { Route as ExpensesRouteImport } from './routes/expenses'
+import { Route as CustomersRouteImport } from './routes/customers'
 import { Route as CrmRouteImport } from './routes/crm'
 import { Route as AttendanceRouteImport } from './routes/attendance'
+import { Route as AiInsightsRouteImport } from './routes/ai-insights'
 import { Route as IndexRouteImport } from './routes/index'
 
 const VisitsRoute = VisitsRouteImport.update({
@@ -28,9 +38,39 @@ const TrackingRoute = TrackingRouteImport.update({
   path: '/tracking',
   getParentRoute: () => rootRouteImport,
 } as any)
+const TasksRoute = TasksRouteImport.update({
+  id: '/tasks',
+  path: '/tasks',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const RolesRoute = RolesRouteImport.update({
+  id: '/roles',
+  path: '/roles',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ReportsRoute = ReportsRouteImport.update({
+  id: '/reports',
+  path: '/reports',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const PayrollRoute = PayrollRouteImport.update({
   id: '/payroll',
   path: '/payroll',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const NotificationsRoute = NotificationsRouteImport.update({
+  id: '/notifications',
+  path: '/notifications',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const MobileRoute = MobileRouteImport.update({
+  id: '/mobile',
+  path: '/mobile',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const LeaveRoute = LeaveRouteImport.update({
+  id: '/leave',
+  path: '/leave',
   getParentRoute: () => rootRouteImport,
 } as any)
 const InvoicesRoute = InvoicesRouteImport.update({
@@ -43,6 +83,21 @@ const HrmsRoute = HrmsRouteImport.update({
   path: '/hrms',
   getParentRoute: () => rootRouteImport,
 } as any)
+const GpsAlertsRoute = GpsAlertsRouteImport.update({
+  id: '/gps-alerts',
+  path: '/gps-alerts',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ExpensesRoute = ExpensesRouteImport.update({
+  id: '/expenses',
+  path: '/expenses',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const CustomersRoute = CustomersRouteImport.update({
+  id: '/customers',
+  path: '/customers',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const CrmRoute = CrmRouteImport.update({
   id: '/crm',
   path: '/crm',
@@ -53,6 +108,11 @@ const AttendanceRoute = AttendanceRouteImport.update({
   path: '/attendance',
   getParentRoute: () => rootRouteImport,
 } as any)
+const AiInsightsRoute = AiInsightsRouteImport.update({
+  id: '/ai-insights',
+  path: '/ai-insights',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
@@ -61,32 +121,62 @@ const IndexRoute = IndexRouteImport.update({
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/ai-insights': typeof AiInsightsRoute
   '/attendance': typeof AttendanceRoute
   '/crm': typeof CrmRoute
+  '/customers': typeof CustomersRoute
+  '/expenses': typeof ExpensesRoute
+  '/gps-alerts': typeof GpsAlertsRoute
   '/hrms': typeof HrmsRoute
   '/invoices': typeof InvoicesRoute
+  '/leave': typeof LeaveRoute
+  '/mobile': typeof MobileRoute
+  '/notifications': typeof NotificationsRoute
   '/payroll': typeof PayrollRoute
+  '/reports': typeof ReportsRoute
+  '/roles': typeof RolesRoute
+  '/tasks': typeof TasksRoute
   '/tracking': typeof TrackingRoute
   '/visits': typeof VisitsRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/ai-insights': typeof AiInsightsRoute
   '/attendance': typeof AttendanceRoute
   '/crm': typeof CrmRoute
+  '/customers': typeof CustomersRoute
+  '/expenses': typeof ExpensesRoute
+  '/gps-alerts': typeof GpsAlertsRoute
   '/hrms': typeof HrmsRoute
   '/invoices': typeof InvoicesRoute
+  '/leave': typeof LeaveRoute
+  '/mobile': typeof MobileRoute
+  '/notifications': typeof NotificationsRoute
   '/payroll': typeof PayrollRoute
+  '/reports': typeof ReportsRoute
+  '/roles': typeof RolesRoute
+  '/tasks': typeof TasksRoute
   '/tracking': typeof TrackingRoute
   '/visits': typeof VisitsRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
+  '/ai-insights': typeof AiInsightsRoute
   '/attendance': typeof AttendanceRoute
   '/crm': typeof CrmRoute
+  '/customers': typeof CustomersRoute
+  '/expenses': typeof ExpensesRoute
+  '/gps-alerts': typeof GpsAlertsRoute
   '/hrms': typeof HrmsRoute
   '/invoices': typeof InvoicesRoute
+  '/leave': typeof LeaveRoute
+  '/mobile': typeof MobileRoute
+  '/notifications': typeof NotificationsRoute
   '/payroll': typeof PayrollRoute
+  '/reports': typeof ReportsRoute
+  '/roles': typeof RolesRoute
+  '/tasks': typeof TasksRoute
   '/tracking': typeof TrackingRoute
   '/visits': typeof VisitsRoute
 }
@@ -94,42 +184,82 @@ export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
   fullPaths:
     | '/'
+    | '/ai-insights'
     | '/attendance'
     | '/crm'
+    | '/customers'
+    | '/expenses'
+    | '/gps-alerts'
     | '/hrms'
     | '/invoices'
+    | '/leave'
+    | '/mobile'
+    | '/notifications'
     | '/payroll'
+    | '/reports'
+    | '/roles'
+    | '/tasks'
     | '/tracking'
     | '/visits'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
+    | '/ai-insights'
     | '/attendance'
     | '/crm'
+    | '/customers'
+    | '/expenses'
+    | '/gps-alerts'
     | '/hrms'
     | '/invoices'
+    | '/leave'
+    | '/mobile'
+    | '/notifications'
     | '/payroll'
+    | '/reports'
+    | '/roles'
+    | '/tasks'
     | '/tracking'
     | '/visits'
   id:
     | '__root__'
     | '/'
+    | '/ai-insights'
     | '/attendance'
     | '/crm'
+    | '/customers'
+    | '/expenses'
+    | '/gps-alerts'
     | '/hrms'
     | '/invoices'
+    | '/leave'
+    | '/mobile'
+    | '/notifications'
     | '/payroll'
+    | '/reports'
+    | '/roles'
+    | '/tasks'
     | '/tracking'
     | '/visits'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  AiInsightsRoute: typeof AiInsightsRoute
   AttendanceRoute: typeof AttendanceRoute
   CrmRoute: typeof CrmRoute
+  CustomersRoute: typeof CustomersRoute
+  ExpensesRoute: typeof ExpensesRoute
+  GpsAlertsRoute: typeof GpsAlertsRoute
   HrmsRoute: typeof HrmsRoute
   InvoicesRoute: typeof InvoicesRoute
+  LeaveRoute: typeof LeaveRoute
+  MobileRoute: typeof MobileRoute
+  NotificationsRoute: typeof NotificationsRoute
   PayrollRoute: typeof PayrollRoute
+  ReportsRoute: typeof ReportsRoute
+  RolesRoute: typeof RolesRoute
+  TasksRoute: typeof TasksRoute
   TrackingRoute: typeof TrackingRoute
   VisitsRoute: typeof VisitsRoute
 }
@@ -150,11 +280,53 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof TrackingRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/tasks': {
+      id: '/tasks'
+      path: '/tasks'
+      fullPath: '/tasks'
+      preLoaderRoute: typeof TasksRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/roles': {
+      id: '/roles'
+      path: '/roles'
+      fullPath: '/roles'
+      preLoaderRoute: typeof RolesRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/reports': {
+      id: '/reports'
+      path: '/reports'
+      fullPath: '/reports'
+      preLoaderRoute: typeof ReportsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/payroll': {
       id: '/payroll'
       path: '/payroll'
       fullPath: '/payroll'
       preLoaderRoute: typeof PayrollRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/notifications': {
+      id: '/notifications'
+      path: '/notifications'
+      fullPath: '/notifications'
+      preLoaderRoute: typeof NotificationsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/mobile': {
+      id: '/mobile'
+      path: '/mobile'
+      fullPath: '/mobile'
+      preLoaderRoute: typeof MobileRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/leave': {
+      id: '/leave'
+      path: '/leave'
+      fullPath: '/leave'
+      preLoaderRoute: typeof LeaveRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/invoices': {
@@ -171,6 +343,27 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof HrmsRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/gps-alerts': {
+      id: '/gps-alerts'
+      path: '/gps-alerts'
+      fullPath: '/gps-alerts'
+      preLoaderRoute: typeof GpsAlertsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/expenses': {
+      id: '/expenses'
+      path: '/expenses'
+      fullPath: '/expenses'
+      preLoaderRoute: typeof ExpensesRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/customers': {
+      id: '/customers'
+      path: '/customers'
+      fullPath: '/customers'
+      preLoaderRoute: typeof CustomersRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/crm': {
       id: '/crm'
       path: '/crm'
@@ -185,6 +378,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AttendanceRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/ai-insights': {
+      id: '/ai-insights'
+      path: '/ai-insights'
+      fullPath: '/ai-insights'
+      preLoaderRoute: typeof AiInsightsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/': {
       id: '/'
       path: '/'
@@ -197,11 +397,21 @@ declare module '@tanstack/react-router' {
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  AiInsightsRoute: AiInsightsRoute,
   AttendanceRoute: AttendanceRoute,
   CrmRoute: CrmRoute,
+  CustomersRoute: CustomersRoute,
+  ExpensesRoute: ExpensesRoute,
+  GpsAlertsRoute: GpsAlertsRoute,
   HrmsRoute: HrmsRoute,
   InvoicesRoute: InvoicesRoute,
+  LeaveRoute: LeaveRoute,
+  MobileRoute: MobileRoute,
+  NotificationsRoute: NotificationsRoute,
   PayrollRoute: PayrollRoute,
+  ReportsRoute: ReportsRoute,
+  RolesRoute: RolesRoute,
+  TasksRoute: TasksRoute,
   TrackingRoute: TrackingRoute,
   VisitsRoute: VisitsRoute,
 }
