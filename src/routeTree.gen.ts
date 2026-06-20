@@ -11,6 +11,7 @@
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as VisitsRouteImport } from './routes/visits'
 import { Route as TrackingRouteImport } from './routes/tracking'
+import { Route as TicketsRouteImport } from './routes/tickets'
 import { Route as TasksRouteImport } from './routes/tasks'
 import { Route as SitemapDotxmlRouteImport } from './routes/sitemap[.]xml'
 import { Route as SalesRouteImport } from './routes/sales'
@@ -38,6 +39,11 @@ const VisitsRoute = VisitsRouteImport.update({
 const TrackingRoute = TrackingRouteImport.update({
   id: '/tracking',
   path: '/tracking',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const TicketsRoute = TicketsRouteImport.update({
+  id: '/tickets',
+  path: '/tickets',
   getParentRoute: () => rootRouteImport,
 } as any)
 const TasksRoute = TasksRouteImport.update({
@@ -150,6 +156,7 @@ export interface FileRoutesByFullPath {
   '/sales': typeof SalesRoute
   '/sitemap.xml': typeof SitemapDotxmlRoute
   '/tasks': typeof TasksRoute
+  '/tickets': typeof TicketsRoute
   '/tracking': typeof TrackingRoute
   '/visits': typeof VisitsRoute
 }
@@ -172,6 +179,7 @@ export interface FileRoutesByTo {
   '/sales': typeof SalesRoute
   '/sitemap.xml': typeof SitemapDotxmlRoute
   '/tasks': typeof TasksRoute
+  '/tickets': typeof TicketsRoute
   '/tracking': typeof TrackingRoute
   '/visits': typeof VisitsRoute
 }
@@ -195,6 +203,7 @@ export interface FileRoutesById {
   '/sales': typeof SalesRoute
   '/sitemap.xml': typeof SitemapDotxmlRoute
   '/tasks': typeof TasksRoute
+  '/tickets': typeof TicketsRoute
   '/tracking': typeof TrackingRoute
   '/visits': typeof VisitsRoute
 }
@@ -219,6 +228,7 @@ export interface FileRouteTypes {
     | '/sales'
     | '/sitemap.xml'
     | '/tasks'
+    | '/tickets'
     | '/tracking'
     | '/visits'
   fileRoutesByTo: FileRoutesByTo
@@ -241,6 +251,7 @@ export interface FileRouteTypes {
     | '/sales'
     | '/sitemap.xml'
     | '/tasks'
+    | '/tickets'
     | '/tracking'
     | '/visits'
   id:
@@ -263,6 +274,7 @@ export interface FileRouteTypes {
     | '/sales'
     | '/sitemap.xml'
     | '/tasks'
+    | '/tickets'
     | '/tracking'
     | '/visits'
   fileRoutesById: FileRoutesById
@@ -286,6 +298,7 @@ export interface RootRouteChildren {
   SalesRoute: typeof SalesRoute
   SitemapDotxmlRoute: typeof SitemapDotxmlRoute
   TasksRoute: typeof TasksRoute
+  TicketsRoute: typeof TicketsRoute
   TrackingRoute: typeof TrackingRoute
   VisitsRoute: typeof VisitsRoute
 }
@@ -304,6 +317,13 @@ declare module '@tanstack/react-router' {
       path: '/tracking'
       fullPath: '/tracking'
       preLoaderRoute: typeof TrackingRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/tickets': {
+      id: '/tickets'
+      path: '/tickets'
+      fullPath: '/tickets'
+      preLoaderRoute: typeof TicketsRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/tasks': {
@@ -454,6 +474,7 @@ const rootRouteChildren: RootRouteChildren = {
   SalesRoute: SalesRoute,
   SitemapDotxmlRoute: SitemapDotxmlRoute,
   TasksRoute: TasksRoute,
+  TicketsRoute: TicketsRoute,
   TrackingRoute: TrackingRoute,
   VisitsRoute: VisitsRoute,
 }
