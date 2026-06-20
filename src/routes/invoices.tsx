@@ -204,6 +204,13 @@ function Invoices() {
           </DialogFooter>
         </DialogContent>
       </Dialog>
+
+      <InvoiceDetailsSheet
+        invoice={detailsInv}
+        open={!!detailsInv}
+        onOpenChange={(o) => !o && setDetailsInv(null)}
+        onShare={(inv) => { setDetailsInv(null); openShare(inv); }}
+      />
     </div>
   );
 }
