@@ -2,7 +2,7 @@ import { Link, useRouterState } from "@tanstack/react-router";
 import {
   LayoutDashboard, Users, Clock, MapPin, Radio, UserCheck, Target, Building2,
   FileText, Wallet, CalendarDays, Receipt, ListChecks, Bell, BarChart3,
-  ShieldCheck, Smartphone, Sparkles, Zap,
+  ShieldCheck, Smartphone, Sparkles, Zap, ShoppingCart, LifeBuoy, Truck, Megaphone,
 } from "lucide-react";
 import {
   Sidebar, SidebarContent, SidebarGroup, SidebarGroupContent, SidebarGroupLabel,
@@ -39,10 +39,19 @@ const groups = [
   {
     label: "Sales & Revenue",
     items: [
+      { title: "Sales Overview", url: "/sales", icon: ShoppingCart },
       { title: "Sales CRM", url: "/crm", icon: Target },
       { title: "Customers", url: "/customers", icon: Building2 },
       { title: "Invoicing", url: "/invoices", icon: FileText },
       { title: "Tasks", url: "/tasks", icon: ListChecks },
+    ],
+  },
+  {
+    label: "Operations",
+    items: [
+      { title: "Support Tickets", url: "/tickets", icon: LifeBuoy },
+      { title: "Procurement", url: "/procurement", icon: Truck },
+      { title: "Workplace Hub", url: "/workplace", icon: Megaphone },
     ],
   },
   {

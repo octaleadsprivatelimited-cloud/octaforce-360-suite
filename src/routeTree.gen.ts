@@ -9,6 +9,7 @@
 // Additionally, you should also exclude this file from your linter and/or formatter to prevent it from being checked or modified.
 
 import { Route as rootRouteImport } from './routes/__root'
+import { Route as WorkplaceRouteImport } from './routes/workplace'
 import { Route as VisitsRouteImport } from './routes/visits'
 import { Route as TrackingRouteImport } from './routes/tracking'
 import { Route as TicketsRouteImport } from './routes/tickets'
@@ -32,6 +33,11 @@ import { Route as AttendanceRouteImport } from './routes/attendance'
 import { Route as AiInsightsRouteImport } from './routes/ai-insights'
 import { Route as IndexRouteImport } from './routes/index'
 
+const WorkplaceRoute = WorkplaceRouteImport.update({
+  id: '/workplace',
+  path: '/workplace',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const VisitsRoute = VisitsRouteImport.update({
   id: '/visits',
   path: '/visits',
@@ -166,6 +172,7 @@ export interface FileRoutesByFullPath {
   '/tickets': typeof TicketsRoute
   '/tracking': typeof TrackingRoute
   '/visits': typeof VisitsRoute
+  '/workplace': typeof WorkplaceRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
@@ -190,6 +197,7 @@ export interface FileRoutesByTo {
   '/tickets': typeof TicketsRoute
   '/tracking': typeof TrackingRoute
   '/visits': typeof VisitsRoute
+  '/workplace': typeof WorkplaceRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
@@ -215,6 +223,7 @@ export interface FileRoutesById {
   '/tickets': typeof TicketsRoute
   '/tracking': typeof TrackingRoute
   '/visits': typeof VisitsRoute
+  '/workplace': typeof WorkplaceRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
@@ -241,6 +250,7 @@ export interface FileRouteTypes {
     | '/tickets'
     | '/tracking'
     | '/visits'
+    | '/workplace'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
@@ -265,6 +275,7 @@ export interface FileRouteTypes {
     | '/tickets'
     | '/tracking'
     | '/visits'
+    | '/workplace'
   id:
     | '__root__'
     | '/'
@@ -289,6 +300,7 @@ export interface FileRouteTypes {
     | '/tickets'
     | '/tracking'
     | '/visits'
+    | '/workplace'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
@@ -314,10 +326,18 @@ export interface RootRouteChildren {
   TicketsRoute: typeof TicketsRoute
   TrackingRoute: typeof TrackingRoute
   VisitsRoute: typeof VisitsRoute
+  WorkplaceRoute: typeof WorkplaceRoute
 }
 
 declare module '@tanstack/react-router' {
   interface FileRoutesByPath {
+    '/workplace': {
+      id: '/workplace'
+      path: '/workplace'
+      fullPath: '/workplace'
+      preLoaderRoute: typeof WorkplaceRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/visits': {
       id: '/visits'
       path: '/visits'
@@ -498,6 +518,7 @@ const rootRouteChildren: RootRouteChildren = {
   TicketsRoute: TicketsRoute,
   TrackingRoute: TrackingRoute,
   VisitsRoute: VisitsRoute,
+  WorkplaceRoute: WorkplaceRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
