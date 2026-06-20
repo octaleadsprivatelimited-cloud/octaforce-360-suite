@@ -17,6 +17,7 @@ import { mock, formatINR, type Invoice } from "@/lib/mock-data";
 import { downloadInvoicePdf, invoiceShareText, shareInvoiceEmail, shareInvoiceWhatsApp } from "@/lib/invoice-pdf";
 import { logActivity } from "@/lib/invoice-activity";
 import { InvoiceDetailsSheet } from "@/components/invoice-details-sheet";
+import { generateReportPdf } from "@/lib/pdf-report";
 
 export const Route = createFileRoute("/invoices")({
   head: () => ({ meta: [{ title: "Invoicing · OctaForce 360" }, { name: "description", content: "GST-compliant invoicing, quotations, proforma invoices, and payment tracking." }] }),
