@@ -28,6 +28,7 @@ function Invoices() {
   const pending = mock.invoices.filter(i=>i.status==="Pending");
   const overdue = mock.invoices.filter(i=>i.status==="Overdue");
   const [shareInv, setShareInv] = useState<Invoice | null>(null);
+  const [detailsInv, setDetailsInv] = useState<Invoice | null>(null);
   const [email, setEmail] = useState("");
   const [phone, setPhone] = useState("");
   const [message, setMessage] = useState("");
@@ -48,6 +49,7 @@ function Invoices() {
     } else {
       shareInvoiceEmail(shareInv);
     }
+    logActivity(shareInv, "email", email || "manual recipient");
     toast.success(`Email draft opened for ${shareInv.id}`);
   };
 
@@ -57,12 +59,14 @@ function Invoices() {
     const num = phone.replace(/\D/g, "");
     const url = num ? `https://wa.me/${num}?text=${text}` : `https://wa.me/?text=${text}`;
     window.open(url, "_blank", "noopener");
+    logActivity(shareInv, "whatsapp", phone || "manual recipient");
     toast.success(`WhatsApp opened for ${shareInv.id}`);
     void shareInvoiceWhatsApp;
   };
 
   const handleDownload = (inv: Invoice) => {
     downloadInvoicePdf(inv);
+    logActivity(inv, "download");
     toast.success(`${inv.id}.pdf downloaded`);
   };
 
